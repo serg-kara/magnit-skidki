@@ -144,3 +144,22 @@ export const SHOP_QUERY_TEMPLATES = [
  * на живом рендере не дал ни одной новой карточки, зато номера домов работают.
  */
 export const SHOP_QUERY_FALLBACK = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((digit) => `{city}, ${digit}`);
+
+/**
+ * Переключатель магазина в шапке (снято с живого рендера 27.11.2026).
+ *
+ * Города как переключателя на сайте нет: выбирается конкретный магазин, и его код
+ * уходит в cookie `shopCode` (значение — JSON-строка с кавычками: `%22992301%22`).
+ * Кликабельна именно кнопка внутри карточки (`button.pl-button-inline`): клик по
+ * контейнеру `--item-left` или по центру карточки куку не меняет — проверено вживую.
+ */
+export const SHOP_PICKER = {
+  openButton: 'button.pl-shop-select-bar',
+  panel: '.pl-shop-select',
+  addressInput: '.pl-shop-select input[placeholder="Адрес магазина"]',
+  item: '.pl-shop-select-shop-list-item',
+  itemPick: '.pl-shop-select-shop-list-item button.pl-button-inline',
+  tabPickup: 'Самовывоз',
+  /** Адрес выбранного магазина после выбора виден в шапке. */
+  selectedBar: '.app-location',
+} as const;

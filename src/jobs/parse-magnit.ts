@@ -50,6 +50,20 @@ async function prepareCities(cityArg: string | undefined, log: SyncLogState): Pr
  * цены, поэтому магазин пробуем выбрать; если выбора нет — остаёмся на shopCode из URL
  * и читаем то, что отдал сервер.
  */
+/**
+ * Адрес выбранного магазина попадает в <title> только после гидрации Nuxt, а карточки
+ * есть в DOM и до неё: `waitForSelector` по карточке поэтому не гарантирует, что title
+ * уже «про наш город». Ждём именно разделителя адреса, иначе §4.1.4 отклонял валидную
+ * страницу как «не про этот город».
+ */
+async function waitForStoreTitle(page: Page, timeoutMs = 30_000): Promise<void> {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    if ((await page.title()).includes('|')) return;
+    await page.waitForTimeout(1_500);
+  }
+}
+
 async function dismissShopPicker(page: Page): Promise<void> {
   const skip = page.getByRole('button', { name: PICKER_BUTTONS.shopSkip.nameRegex }).first();
   if (await skip.isVisible({ timeout: 1_500 }).catch(() => false)) {
@@ -108,6 +122,15 @@ export async function discoverSections(page: Page, robots: RobotsRule[]): Promis
 
 async function runCity(browser: Browser, job: CityJob, robots: RobotsRule[], onlySlug?: string) {
   const context = await browser.newContext({ userAgent: BOT_USER_AGENT, locale: 'ru-RU' });
+  // Сайт считает выбранный магазин только когда код есть и в cookie, и в URL: без куки
+  // сервер отдаёт город по IP, и §4.1.4 честно ловил это как несовпадение города.
+  // Холодная сессия (без захода на главную) получает вместо каталога заглушку доставки
+  // и <title> без адреса вовсе — проверено 27.11.2026, поэтому прогреваем контекст.
+  const warm = await context.newPage();
+  await warm.goto(MAGNIT_ORIGIN, { waitUntil: 'domcontentloaded', timeout: 120_000 }).catch(() => undefined);
+  await warm.waitForTimeout(8_000);
+  await warm.close().catch(() => undefined);
+  await context.addCookies([{ name: 'shopCode', value: `"${job.magnitCityId}"`, domain: 'magnit.ru', path: '/' }]);
   const page = await context.newPage();
   try {
     const taken = new Set(
@@ -145,6 +168,9 @@ async function runCity(browser: Browser, job: CityJob, robots: RobotsRule[], onl
       await dismissShopPicker(page);
       // Модалку «18+» закрываем до снимка: иначе фикстура и разбор будут про заглушку (§4.2).
       if (section.id === ALCOHOL_SECTION_ID) await dismissAgeModal(page);
+      // Снимок берём уже после того, как <title> получил адрес магазина — иначе
+      // фикстура и сверка города (§4.1.4) расходятся.
+      await waitForStoreTitle(page);
 
       const pageHtml = await page.content();
       assertNoCaptcha(pageHtml, href);

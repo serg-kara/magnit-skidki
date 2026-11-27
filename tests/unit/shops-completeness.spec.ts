@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 import { mergedCount, parseShopsHtml, type SiteShop } from '@/jobs/extract-shops';
+import { geoQueryOf, isExactHit } from '@/lib/geocode';
 import { addressKey, cityNamesMatch, settlementFromAddress } from '@/lib/parse/normalize';
 
 /**
@@ -87,4 +88,47 @@ test.describe('нормализация адреса для слияния (п.2
     expect(settlementFromAddress('Краснодарский край, Курганинск г, ул Калинина, д 81')).toBe('Курганинск');
     expect(settlementFromAddress('Ставропольский край, ст-ца Расшеватская, ул Почтовая, зд 2Б')).toBe('Расшеватская');
   });
+});
+
+test.describe('координата принимается только по точному совпадению (п.3 задачи)', () => {
+  const want = { city: 'Ставрополь', street: 'кулакова', house: '29д' };
+
+  test('адрес разбирается на город, улицу и дом', () => {
+    expect(geoQueryOf('Ставропольский край, г Ставрополь, пр-кт Кулакова, д 29Д')).toEqual({
+      city: 'Ставрополь',
+      street: 'кулакова',
+      house: '29д',
+    });
+  });
+
+  test('ответ уровня дома принимается', () => {
+    expect(isExactHit({ lat: 45.0626219, lng: 41.9235214, displayName: '', street: 'проспект Кулакова', housenumber: '29д', city: 'Ставрополь', type: 'house' }, want)).toBe(true);
+  });
+
+  test('центр улицы вместо дома отбрасывается — рисовать по нему магазин значит выдумывать', () => {
+    expect(isExactHit({ lat: 45.038051, lng: 41.9061482, displayName: 'Западный обход', city: 'Ставрополь', type: 'street' }, { city: 'Ставрополь', street: 'западный обход', house: '68а' })).toBe(false);
+  });
+
+  test('чужой город, чужой номер дома и несуществующие координаты отбрасываются', () => {
+    expect(isExactHit({ lat: 45.06, lng: 41.92, displayName: '', street: 'проспект Кулакова', housenumber: '29д', city: 'Невинномысск', type: 'house' }, want)).toBe(false);
+    expect(isExactHit({ lat: 45.06, lng: 41.92, displayName: '', street: 'проспект Кулакова', housenumber: '31', city: 'Ставрополь', type: 'house' }, want)).toBe(false);
+    expect(isExactHit({ lat: NaN, lng: 41.92, displayName: '', street: 'Кулакова', housenumber: '29д', city: 'Ставрополь', type: 'house' }, want)).toBe(false);
+  });
+});
+
+test.describe('импорт не уменьшает уже собранное (п.2 задачи)', () => {
+  const cities: [string, string][] = [
+    ['krasnodar', 'Краснодар'],
+    ['stavropol', 'Ставрополь'],
+    ['kurganinsk', 'Курганинск'],
+    ['armavir', 'Армавир'],
+    ['nevinnomyssk', 'Невинномысск'],
+  ];
+  for (const [slug, name] of cities) {
+    test(`${slug}: слияние не теряет ни одну OSM-точку`, () => {
+      const osm = osmStores(slug);
+      expect(osm.length, 'в сиде нет магазинов этого города').toBeGreaterThan(0);
+      expect(mergedCount(osm, inCity(slug, name)).total).toBeGreaterThanOrEqual(osm.length);
+    });
+  }
 });

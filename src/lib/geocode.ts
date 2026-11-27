@@ -1,34 +1,33 @@
 import { createHash } from 'node:crypto';
 import { DAY_MS, readCacheEntry, writeCache } from '@/lib/jobs';
-import { addressKey, settlementFromAddress } from '@/lib/parse/normalize';
+import { addressKey, cityNamesMatch, settlementFromAddress } from '@/lib/parse/normalize';
 
 /**
- * Геокодер для магазинов, которых нет в OSM (п.3 задачи): Nominatim — открытый сервис
- * с той же лицензией ODbL, что и координаты из §3, без ключей. Ключ `geocoderApiKey`
+ * Геокодер для магазинов, которых нет в OSM (п.3 задачи). Провайдеры — открытые сервисы
+ * на данных ODbL, без ключей: Photon (photon.komoot.io) и Nominatim. Ключ `geocoderApiKey`
  * из конфига страницы magnit.ru НЕ используем: это чужие креды, §0.4 такое запрещает.
  *
- * Важно по факту прогонов: свободный текст «…, ул Мира, д 10» Nominatim не разбирает
- * (русский префикс «д» ломает матчинг, отдаёт пусто), а структурированный запрос
- * city=…&street=… находит дом. Поэтому запрос строится из разобранного адреса.
+ * Порядок по умолчанию «photon,nominatim»: Nominatim с этой машины отвечает 403 по своей
+ * политике (как и Overpass — 406), Photon работает.
+ *
+ * Главное правило: координата принимается только когда ответ реально про этот дом
+ * (город + улица + номер дома, тип house). Иначе точка — центр улицы, и рисовать по
+ * ней магазин значит выдумывать адрес (§0.4 «ничего не выдумывать») — такой адрес
+ * остаётся без координат и попадает в счётчик withoutCoords.
  */
-const NOMINATIM_URL = process.env.GEOCODE_URL ?? 'https://nominatim.openstreetmap.org/search';
-/** Правило вежливости Nominatim — не чаще одного запроса в секунду. */
+const PROVIDERS = (process.env.GEOCODE_PROVIDERS ?? 'photon,nominatim').split(',').map((p) => p.trim()).filter(Boolean);
+/** Правило вежливости обоих сервисов — не чаще одного запроса в секунду. */
 const RATE_MS = Number(process.env.GEOCODE_RATE_MS ?? 1_100);
 const CACHE_MS = Number(process.env.GEOCODE_CACHE_DAYS ?? 180) * DAY_MS;
-/** Ответ «точки нет» и отказ сервиса держим сутки: это состояние источника, а не свойства адреса. */
+/** Отказ/промах держим сутки: это состояние источника, а не свойство адреса. */
 const NEGATIVE_CACHE_MS = Number(process.env.GEOCODE_NEGATIVE_CACHE_DAYS ?? 1) * DAY_MS;
-
-export type GeoPoint = { lat: number; lng: number; displayName: string };
-
-type CacheEntry = { found: boolean; lat?: number; lng?: number; displayName?: string };
-
-/**
- * UA для Nominatim — отдельная строка: политика сервиса отдаёт 403 «Access denied»
- * запросам, где в User-Agent есть слово «aggregator» (именно так и ловили молча
- * пустые координаты в первом прогоне). Контакт и название проекта остаются.
- */
-const GEOCODE_UA =
+const UA =
   process.env.GEOCODE_USER_AGENT ?? 'skidki-u-doma/0.1 (open public map for store addresses; contact: skidki-u-doma@example.com)';
+
+export type GeoPoint = { lat: number; lng: number; displayName: string; provider: string };
+
+type RawHit = { lat: number; lng: number; displayName: string; street?: string; housenumber?: string; city?: string; type?: string };
+type CacheEntry = { found: boolean; lat?: number; lng?: number; displayName?: string; provider?: string };
 
 let lastAt = 0;
 
@@ -38,71 +37,143 @@ async function waitRate(): Promise<void> {
   lastAt = Date.now();
 }
 
-/** Адрес → параметры Nominatim: город + «улица дом». */
-export function geoQueryOf(address: string, fallbackCity?: string): { city: string; street: string } | null {
+export type GeoWanted = { city: string; street: string; house: string };
+
+/** Адрес → ожидаемые части для запроса и проверки совпадения. */
+export function geoQueryOf(address: string, fallbackCity?: string): GeoWanted | null {
   const key = addressKey(address);
   if (!key) return null;
   const [street, house] = key.split('|');
   const city = settlementFromAddress(address) ?? fallbackCity;
-  if (!city) return null;
-  // Ключ склеивает слова через дефис («им-дзержинского»), а Nominatim ждёт обычные пробелы.
-  return { city, street: `${street.replace(/-/g, ' ')} ${house}`.trim() };
+  if (!city || !street || !house) return null;
+  // Ключ склеивает слова через дефис («им-дзержинского»), сервисы ждут обычные пробелы.
+  return { city, street: street.replace(/-/g, ' '), house };
 }
 
-async function ask(params: Record<string, string>): Promise<GeoPoint | null> {
+const norm = (value: string | undefined): string =>
+  (value ?? '')
+    .toLowerCase()
+    .replace(/[\s.,\-\/#]+/g, '')
+    .replace(/[ёe]/g, (ch) => (ch === 'ё' ? 'е' : 'ё'));
+
+/**
+ * Проверка, что нам вернули именно этот дом, а не улицу/город: тип house, номер дома
+ * совпал, город совпал, и в названии улицы есть хотя бы одно значимое слово из запроса.
+ */
+export function isExactHit(hit: RawHit, want: GeoWanted): boolean {
+  if (!Number.isFinite(hit.lat) || !Number.isFinite(hit.lng)) return false;
+  if (hit.housenumber && norm(hit.housenumber) !== norm(want.house)) return false;
+  if (!hit.housenumber) return false;
+  if (hit.city && !cityNamesMatch(norm(hit.city), norm(want.city))) return false;
+  if (hit.type && !/house|building|addr/i.test(hit.type)) return false;
+  const streetWords = want.street.toLowerCase().split(/[\s-]+/).filter((w) => w.length >= 4);
+  const hitStreet = norm(hit.street);
+  if (streetWords.length && !streetWords.some((w) => hitStreet.includes(w))) return false;
+  return true;
+}
+
+async function getJson(url: string): Promise<unknown | null> {
   await waitRate();
-  const url = `${NOMINATIM_URL}?${new URLSearchParams({ format: 'jsonv2', limit: '1', ...params }).toString()}`;
   try {
-    const res = await fetch(url, {
-      headers: { 'user-agent': GEOCODE_UA, 'accept-language': 'ru' },
-      signal: AbortSignal.timeout(30_000),
-    });
-    // 403/429 — сервис нас режет: это отсутствие точки, а не повод подбирать обход (§0.4).
+    const res = await fetch(url, { headers: { 'user-agent': UA, 'accept-language': 'ru,en' }, signal: AbortSignal.timeout(25_000) });
+    // 403/429 — сервис нас не обслуживает: это отсутствие точки, а не повод подбирать обход (§0.4).
     if (!res.ok) return null;
-    const rows = (await res.json()) as { lat?: string; lon?: string; display_name?: string }[];
-    const hit = Array.isArray(rows) ? rows[0] : undefined;
-    if (!hit?.lat || !hit.lon) return null;
-    return { lat: Number(hit.lat), lng: Number(hit.lon), displayName: hit.display_name ?? '' };
+    return await res.json();
   } catch {
     return null;
   }
 }
 
+function photonHits(body: unknown): RawHit[] {
+  const features = (body as { features?: unknown[] })?.features;
+  if (!Array.isArray(features)) return [];
+  return features.flatMap((raw) => {
+    const f = raw as { geometry?: { coordinates?: [number, number] }; properties?: Record<string, string> };
+    const [lng, lat] = f.geometry?.coordinates ?? [];
+    const p = f.properties ?? {};
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) return [];
+    return [{
+      lat: lat as number,
+      lng: lng as number,
+      displayName: [p.name, p.street, p.housenumber, p.city].filter(Boolean).join(', '),
+      street: p.street,
+      housenumber: p.housenumber,
+      city: p.city ?? p.locality ?? p.state,
+      type: p.type,
+    }];
+  });
+}
+
+type NominatimRow = {
+  lat?: string;
+  lon?: string;
+  display_name?: string;
+  addresstype?: string;
+  class?: string;
+  type?: string;
+  address?: { street?: string; housenumber?: string; city?: string; town?: string; village?: string; municipality?: string };
+};
+
+function nominatimHits(body: unknown): RawHit[] {
+  if (!Array.isArray(body)) return [];
+  return (body as NominatimRow[]).map((row) => ({
+    lat: Number(row.lat),
+    lng: Number(row.lon),
+    displayName: row.display_name ?? '',
+    street: row.address?.street ?? row.display_name ?? '',
+    housenumber: row.address?.housenumber ?? '',
+    city: row.address?.city ?? row.address?.town ?? row.address?.village ?? row.address?.municipality ?? '',
+    type: row.addresstype ?? row.type ?? '',
+  }));
+}
+
+function endpointFor(provider: string, want: GeoWanted): string | null {
+  const q = `${want.street} ${want.house}, ${want.city}`;
+  if (provider === 'photon') return `https://photon.komoot.io/api/?limit=1&q=${encodeURIComponent(q)}`;
+  if (provider === 'nominatim')
+    return `https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=1&countrycodes=ru&city=${encodeURIComponent(want.city)}&street=${encodeURIComponent(`${want.street} ${want.house}`)}`;
+  return null;
+}
+
+/** Спрашиваем провайдеров по очереди, берём первый точный ответ. */
+async function askProviders(want: GeoWanted): Promise<GeoPoint | null> {
+  for (const provider of PROVIDERS) {
+    const url = endpointFor(provider, want);
+    if (!url) continue;
+    const body = await getJson(url);
+    if (!body) continue;
+    const hits = provider === 'photon' ? photonHits(body) : nominatimHits(body);
+    const exact = hits.find((hit) => isExactHit(hit, want));
+    if (exact) return { ...exact, provider };
+  }
+  return null;
+}
+
 /**
- * Возвращает точку либо null. Отрицательный ответ тоже кэшируется (п.3 задачи:
- * повторный запуск не должен долбить API), поэтому в кэше лежит объект-конверт,
- * а не голый null — иначе промах кэша неотличим от «мы уже спрашивали, точки нет».
- * Отрицательное храним сутки: отказ сервиса (403) — не приговор адресу, а
- * состояние источника, и через сутки надо попробовать снова.
+ * П.3 задачи: повторный запуск не должен долбить API — поэтому ответ (и «найдено», и
+ * «не найдено») кэшируется в data/cache/geocode/. Ключ включает набор провайдеров: при
+ * смене провайдера старые отрицательные записи не должны вечно считать адрес мёртвым.
  */
 export async function geocode(address: string, fallbackCity?: string): Promise<GeoPoint | null> {
-  const query = geoQueryOf(address, fallbackCity);
-  if (!query) return null;
-  const key = createHash('sha1').update(`${query.city}|${query.street}`).digest('hex');
+  const want = geoQueryOf(address, fallbackCity);
+  if (!want) return null;
+  const key = createHash('sha1').update(`${PROVIDERS.join(',')}|${want.city}|${want.street}|${want.house}`).digest('hex');
 
   const cached = await readCacheEntry<CacheEntry>('geocode', key);
   if (cached) {
     const ttl = cached.value.found ? CACHE_MS : NEGATIVE_CACHE_MS;
     if (Date.now() - cached.at <= ttl) {
-      return cached.value.found
-        ? { lat: cached.value.lat!, lng: cached.value.lng!, displayName: cached.value.displayName ?? '' }
-        : null;
+      const v = cached.value;
+      return v.found ? { lat: v.lat!, lng: v.lng!, displayName: v.displayName ?? '', provider: v.provider ?? '' } : null;
     }
   }
 
-  const base = { countrycodes: 'ru', city: query.city, street: query.street };
-  let point = await ask(base as Record<string, string>);
-  if (!point) {
-    // Резерв: свободный текст без русских префиксов «д»/«ул» — иногда находит то, что
-    // не находит структурированный запрос (новые улицы, посёлки без города в индексе).
-    point = await ask({ q: `${query.city}, ${query.street}, Россия` });
-  }
-
+  const point = await askProviders(want);
   await writeCache(
     'geocode',
     key,
     point
-      ? { found: true, lat: point.lat, lng: point.lng, displayName: point.displayName }
+      ? { found: true, lat: point.lat, lng: point.lng, displayName: point.displayName, provider: point.provider }
       : { found: false },
   );
   return point;

@@ -12,6 +12,7 @@
     "db:studio": "prisma studio",
     "sync:stores": "tsx src/jobs/import-cities.ts",
     "sync:shops": "tsx src/jobs/import-stores-source.ts",
+    "sync:citymap": "tsx src/jobs/pick-shop-codes.ts",
     "sync:promotions": "tsx src/jobs/parse-magnit.ts",
     "sync:all": "npm run sync:stores && npm run sync:promotions",
     "worker": "tsx src/jobs/schedule.ts",

@@ -248,6 +248,9 @@ export function cityFromTitle(title: string | null | undefined): string | null {
   for (const part of parts) {
     // \b здесь нельзя: он считается по ASCII-\w, а «край» оканчивается кириллицей.
     if (/(край|область|республика|автономн)\s*$/i.test(part)) continue;
+    // Улица и дом — не город: в части title «Ставропольский край, пр-кт Кулакова, д 29Д»
+    // город сайтом не подписан, и без этого пропуска первым «городом» становился «Пр-кт».
+    if (isStreetToken(part) || isHouseToken(part)) continue;
     const cleaned = part
       .replace(/\b(г\.?|город|ст-?ца\.?|станица|пос\.?|посёлок|с\.?|село|r\.p)\b\.?/gi, ' ')
       .replace(SPACE_CHARS, ' ')
