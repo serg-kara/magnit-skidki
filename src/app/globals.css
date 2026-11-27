@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
+@theme {
+  --color-canvas: #f4f6f8;
+  --color-surface: #ffffff;
+  --color-ink: #15181e;
+  --color-muted: #5c6573;
+  --color-line: #e3e7ee;
+  --color-brand: #0f766e;
+  --color-brand-soft: #e6f4f2;
+  --color-sale: #d92b3a;
+  --color-sale-soft: #fdecee;
+  --color-warn: #b45309;
+  --radius-card: 12px;
+  --shadow-card: 0 1px 2px rgba(21, 24, 30, 0.06), 0 8px 24px rgba(21, 24, 30, 0.08);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+/* Кластеры на карте: своя группировка по зуму (§6.2), без сторонних плагинов. */
+.cluster-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  box-shadow: var(--shadow-card);
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px;
+  font-family: inherit;
+}
+
+.leaflet-container {
+  font-family: inherit;
+  background: #dfe4ea;
 }

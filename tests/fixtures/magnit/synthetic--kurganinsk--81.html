@@ -1,0 +1,116 @@
+<!doctype html>
+<!--
+  Синтетическая фикстура алкогольного раздела (§4.2) в реальной разметке.
+  Две табачные карточки вставлены намеренно: табак подмешивают в алкогольную выдачу,
+  и парсер обязан отбросить их до записи в БД. Модалка «18+» — штатная, её закрывает
+  кликом parse-magnit.ts; обхода защиты нет.
+-->
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>Акции и скидки: алкоголь — в каталоге на сайте сети Магнит (81) | Краснодарский край, Курганинск г, улица Калинина, дом 81</title>
+  </head>
+  <body>
+    <div class="age-confirmation">
+      <p>Подтвердите, что вам есть 18</p>
+      <button type="button">Да, мне есть 18</button>
+    </div>
+    <main class="promo-catalog-page">
+      <div class="promo-catalog-listing">
+        <article class="unit-catalog-product-preview" data-test-id="v-product-preview">
+          <a title="Вино" class="pl-hover-base" href="/promo-product/2001-vino?shopCode=900001">
+            <div class="unit-catalog-product-preview-labels">
+              <div class="unit-catalog-product-preview-labels__badges">
+                <div class="pl-label pl-label_discount"><div class="pl-label__content">-28%</div></div>
+                <div class="pl-label pl-label_map"><div class="pl-label__content">-28% по карте Магнит</div></div>
+              </div>
+            </div>
+            <div class="unit-catalog-product-preview-description">
+              <div class="unit-catalog-product-preview-text">
+                <div class="unit-catalog-product-preview-prices unit-catalog-product-preview-prices_ordinary">
+                  <div class="unit-catalog-product-preview-prices__top-row">
+                    <span>649&nbsp;₽</span>
+                    <span>899&nbsp;₽</span>
+                  </div>
+                </div>
+                <div class="pl-text unit-catalog-product-preview-title">
+                  Вино игристое «Абрау-Дюрсо» брют красное 0,75 л
+                </div>
+                <div class="pl-text unit-catalog-product-preview-period">20.11&nbsp;&ndash;&nbsp;03.12</div>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <article class="unit-catalog-product-preview" data-test-id="v-product-preview">
+          <a title="Пиво" class="pl-hover-base" href="/promo-product/2002-pivo?shopCode=900001">
+            <div class="unit-catalog-product-preview-description">
+              <div class="unit-catalog-product-preview-text">
+                <div class="unit-catalog-product-preview-prices unit-catalog-product-preview-prices_ordinary">
+                  <div class="unit-catalog-product-preview-prices__top-row">
+                    <span>109,99&nbsp;₽</span>
+                    <span>145,00&nbsp;₽</span>
+                  </div>
+                </div>
+                <div class="pl-text unit-catalog-product-preview-title">
+                  Пиво светлое фильтрованное «Velkopopovicky Kozel» 0,5 л
+                </div>
+                <div class="pl-text unit-catalog-product-preview-period">20.11&nbsp;&ndash;&nbsp;03.12</div>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <article class="unit-catalog-product-preview" data-test-id="v-product-preview">
+          <a title="Шампанское" class="pl-hover-base" href="/promo-product/2003-shampan?shopCode=900001">
+            <div class="unit-catalog-product-preview-labels">
+              <div class="unit-catalog-product-preview-labels__badges">
+                <div class="pl-label pl-label_multiplicity"><div class="pl-label__content">2 по цене 1</div></div>
+              </div>
+            </div>
+            <div class="unit-catalog-product-preview-description">
+              <div class="unit-catalog-product-preview-text">
+                <div class="unit-catalog-product-preview-prices unit-catalog-product-preview-prices_ordinary">
+                  <div class="unit-catalog-product-preview-prices__top-row"><span>450&nbsp;₽</span></div>
+                </div>
+                <div class="pl-text unit-catalog-product-preview-title">Шампанское «Российское» полусладкое 0,9 л</div>
+                <div class="pl-text unit-catalog-product-preview-period">01.01&nbsp;&ndash;&nbsp;31.01</div>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <!-- Табак: должен быть отброшен парсером (§4.2). -->
+        <article class="unit-catalog-product-preview" data-test-id="v-product-preview">
+          <a title="Сигареты" class="pl-hover-base" href="/promo-product/2004-sigaret?shopCode=900001">
+            <div class="unit-catalog-product-preview-description">
+              <div class="unit-catalog-product-preview-text">
+                <div class="unit-catalog-product-preview-prices unit-catalog-product-preview-prices_ordinary">
+                  <div class="unit-catalog-product-preview-prices__top-row">
+                    <span>149&nbsp;₽</span>
+                    <span>179&nbsp;₽</span>
+                  </div>
+                </div>
+                <div class="pl-text unit-catalog-product-preview-title">Сигареты «Красного бренда» классические 20 шт</div>
+              </div>
+            </div>
+          </a>
+        </article>
+
+        <!-- Система нагревания — тоже табак по правилу §4.2. -->
+        <article class="unit-catalog-product-preview" data-test-id="v-product-preview">
+          <a title="IQOS" class="pl-hover-base" href="/promo-product/2005-iqos?shopCode=900001">
+            <div class="unit-catalog-product-preview-description">
+              <div class="unit-catalog-product-preview-text">
+                <div class="unit-catalog-product-preview-prices unit-catalog-product-preview-prices_ordinary">
+                  <div class="unit-catalog-product-preview-prices__top-row"><span>17&nbsp;990&nbsp;₽</span></div>
+                </div>
+                <div class="pl-text unit-catalog-product-preview-title">Система нагревания табака IQOS ILI</div>
+              </div>
+            </div>
+          </a>
+        </article>
+      </div>
+    </main>
+  </body>
+</html>

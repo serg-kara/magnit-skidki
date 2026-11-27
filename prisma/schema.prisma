@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Region {
+  id          Int    @id @default(autoincrement())
+  slug        String @unique
+  name        String
+  osmAreaName String
+  cities      City[]
+}
+
+model City {
+  id        Int             @id @default(autoincrement())
+  slug      String          @unique
+  name      String
+  lat       Float
+  lng       Float
+  regionId  Int
+  region    Region          @relation(fields: [regionId], references: [id])
+  stores    Store[]
+  sourceMap SourceCityMap?
+}
+
+model SourceCityMap {
+  id             Int    @id @default(autoincrement())
+  cityId         Int    @unique
+  city           City   @relation(fields: [cityId], references: [id])
+  magnitCityId   String
+  magnitCityName String
+}
+
+model Store {
+  id        Int              @id @default(autoincrement())
+  cityId    Int
+  city      City             @relation(fields: [cityId], references: [id])
+  name      String
+  format    String           @default("unknown")
+  address   String
+  lat       Float
+  lng       Float
+  osmId     String           @unique
+  promos    PromotionStore[]
+  updatedAt DateTime         @updatedAt
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  slug     String    @unique
+  name     String
+  isAdult  Boolean   @default(false)
+  products Product[]
+}
+
+model Product {
+  id         Int           @id @default(autoincrement())
+  slug       String        @unique
+  name       String
+  brand      String?
+  categoryId Int?
+  category   Category?     @relation(fields: [categoryId], references: [id])
+  promos     Promotion[]
+}
+
+model Promotion {
+  id          Int              @id @default(autoincrement())
+  productId   Int
+  product     Product          @relation(fields: [productId], references: [id])
+  scope       String
+  priceOld    Float?
+  priceNew    Float?
+  discountPct Int?
+  bonus       String?
+  validFrom   DateTime?
+  validTo     DateTime?
+  sourceUrl   String?
+  imageUrl    String?
+  sig         String           @unique
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  stores      PromotionStore[]
+}
+
+model PromotionStore {
+  promotionId Int
+  storeId     Int
+  promotion   Promotion @relation(fields: [promotionId], references: [id], onDelete: Cascade)
+  store       Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  @@id([promotionId, storeId])
+}
+
+model SyncLog {
+  id         Int       @id @default(autoincrement())
+  job        String
+  status     String
+  message    String?
+  citiesOk   Int       @default(0)
+  itemsNew   Int       @default(0)
+  itemsSeen  Int       @default(0)
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
+}

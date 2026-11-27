@@ -39,3 +39,21 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# база и кэш синхронизаций (сырые ответы OSM и discovered-URL не коммитим;
+# data/*.sample.json — наоборот, обязательный артефакт §7.1)
+/prisma/*.db
+/prisma/*.db-journal
+/data/cache/
+/data/discovered-sections.json
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# временные файлы отладки
+/.probe-*
+/.dbq.mts
+/.check-*.mts

@@ -18,6 +18,13 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "test-results/**",
+      "playwright-report/**",
+      // одноразовые отладочные скрипты (те же пути, что и в .gitignore) — не часть проекта
+      ".qwen/**",
+      ".check-*.mts",
+      ".probe-*",
+      ".dbq.mts",
     ],
   },
 ];

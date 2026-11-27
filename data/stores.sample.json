@@ -1,0 +1,643 @@
+{
+  "generatedAt": "2026-11-27T03:40:56.302Z",
+  "source": "OpenStreetMap, получен через Overpass API (src/jobs/import-cities.ts). Координаты и адреса — из OSM, вручную не правились.",
+  "cities": [
+    {
+      "slug": "kurganinsk",
+      "name": "Курганинск",
+      "region": "krasnodarskiy-kray",
+      "lat": 44.8388389375,
+      "lng": 41.3806088625,
+      "stores": [
+        {
+          "osmId": "node/12518210472",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.8646335,
+          "lng": 41.3291435
+        },
+        {
+          "osmId": "way/277120534",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "улица Калинина, д. 81",
+          "lat": 44.8336915,
+          "lng": 41.3840507
+        },
+        {
+          "osmId": "way/291461539",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "улица Крупской, д. 2",
+          "lat": 44.8388389375,
+          "lng": 41.3806088625
+        }
+      ]
+    },
+    {
+      "slug": "krasnodar",
+      "name": "Краснодар",
+      "region": "krasnodarskiy-kray",
+      "lat": 45.0303624,
+      "lng": 38.9182031,
+      "stores": [
+        {
+          "osmId": "node/10656361267",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0162576,
+          "lng": 38.9133811
+        },
+        {
+          "osmId": "node/10656361269",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0139292,
+          "lng": 38.9173333
+        },
+        {
+          "osmId": "node/10799170816",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9993074,
+          "lng": 38.9294275
+        },
+        {
+          "osmId": "node/11941567268",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "ул. Бжегокайская улица, д. 2, Новая Адыгея",
+          "lat": 45.024238,
+          "lng": 38.929017
+        },
+        {
+          "osmId": "node/1214594688",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0303001,
+          "lng": 38.9190934
+        },
+        {
+          "osmId": "node/1214594711",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0303624,
+          "lng": 38.910404
+        },
+        {
+          "osmId": "node/1214736914",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0329156,
+          "lng": 38.9168988
+        },
+        {
+          "osmId": "node/13772945601",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "ул. Платановый бульвар, д. 6/1",
+          "lat": 45.0315751,
+          "lng": 38.9092749
+        },
+        {
+          "osmId": "node/13772947201",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "улица Бульварное Кольцо, д. 7Д",
+          "lat": 45.0343762,
+          "lng": 38.908233
+        },
+        {
+          "osmId": "node/13944903990",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "улица Калинина, д. 138, Краснодар",
+          "lat": 45.0438402,
+          "lng": 38.9305228
+        },
+        {
+          "osmId": "node/13945142507",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "улица Красных Партизан, д. 237, Краснодар",
+          "lat": 45.0570502,
+          "lng": 38.9304425
+        },
+        {
+          "osmId": "node/13950983390",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "ул. Дорожная улица, д. 24",
+          "lat": 44.9800776,
+          "lng": 38.937017
+        },
+        {
+          "osmId": "node/1603378733",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0405196,
+          "lng": 38.9182031
+        },
+        {
+          "osmId": "node/1704380098",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0295651,
+          "lng": 38.9155998
+        },
+        {
+          "osmId": "node/1913917641",
+          "name": "Остановка \"Магнит\"",
+          "format": "unknown",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9749829,
+          "lng": 38.940315
+        },
+        {
+          "osmId": "node/4299454997",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9915369,
+          "lng": 38.9312219
+        },
+        {
+          "osmId": "node/4599257604",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "улица Гагарина, д. 159/1, Яблоновский",
+          "lat": 44.999193,
+          "lng": 38.9314603
+        },
+        {
+          "osmId": "node/4661180176",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0558989,
+          "lng": 38.8915649
+        },
+        {
+          "osmId": "node/989913722",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0344404,
+          "lng": 38.9202691
+        },
+        {
+          "osmId": "way/467376583",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "улица Генерала Шифрина, д. 1/1, Краснодар",
+          "lat": 45.03882709999999,
+          "lng": 38.913363
+        },
+        {
+          "osmId": "way/89957472",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "улица Думенко, д. 8/1, Краснодар",
+          "lat": 45.03593909999999,
+          "lng": 38.91682254
+        }
+      ]
+    },
+    {
+      "slug": "stavropol",
+      "name": "Ставрополь",
+      "region": "stavropolskiy-kray",
+      "lat": 45.012464370000004,
+      "lng": 41.91585765,
+      "stores": [
+        {
+          "osmId": "node/1116163438",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0021698,
+          "lng": 41.9212183
+        },
+        {
+          "osmId": "node/1225523384",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0145287,
+          "lng": 41.9172389
+        },
+        {
+          "osmId": "node/1346216413",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0067471,
+          "lng": 41.9121375
+        },
+        {
+          "osmId": "node/2202839383",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9966089,
+          "lng": 41.9133425
+        },
+        {
+          "osmId": "node/2484891562",
+          "name": "Магнитно-резонансная томография",
+          "format": "unknown",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9908747,
+          "lng": 41.9204829
+        },
+        {
+          "osmId": "node/2854474579",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0154833,
+          "lng": 41.9146405
+        },
+        {
+          "osmId": "node/2874694229",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0063393,
+          "lng": 41.9170748
+        },
+        {
+          "osmId": "node/3518762840",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0056297,
+          "lng": 41.9200672
+        },
+        {
+          "osmId": "node/3813583807",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0012077,
+          "lng": 41.9058877
+        },
+        {
+          "osmId": "node/3883146120",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0054245,
+          "lng": 41.9232241
+        },
+        {
+          "osmId": "node/3970360992",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9852892,
+          "lng": 41.9223152
+        },
+        {
+          "osmId": "node/3970360993",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0119433,
+          "lng": 41.9174851
+        },
+        {
+          "osmId": "node/3970360994",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0136099,
+          "lng": 41.9217506
+        },
+        {
+          "osmId": "node/3970360995",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0150862,
+          "lng": 41.9078003
+        },
+        {
+          "osmId": "node/3970360997",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0154826,
+          "lng": 41.9046586
+        },
+        {
+          "osmId": "node/4705430803",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0173463,
+          "lng": 41.8975064
+        },
+        {
+          "osmId": "node/6334887563",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0171336,
+          "lng": 41.8964294
+        },
+        {
+          "osmId": "node/6334887566",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "адрес не указан в OSM",
+          "lat": 45.017273,
+          "lng": 41.8966654
+        },
+        {
+          "osmId": "node/970805590",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9988942,
+          "lng": 41.9174312
+        },
+        {
+          "osmId": "node/993519028",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.0374714,
+          "lng": 41.9170859
+        },
+        {
+          "osmId": "way/1327460161",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "ул. Рассветная улица, д. 4, Ставрополь",
+          "lat": 45.01298544,
+          "lng": 41.87703104
+        },
+        {
+          "osmId": "way/465570882",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 45.02158740000001,
+          "lng": 41.91044079333334
+        }
+      ]
+    },
+    {
+      "slug": "nevinnomyssk",
+      "name": "Невинномысск",
+      "region": "stavropolskiy-kray",
+      "lat": 44.638590699999995,
+      "lng": 41.94185305,
+      "stores": [
+        {
+          "osmId": "node/11873597527",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "ул. Водопроводная улица, д. 369, Невинномысск",
+          "lat": 44.627186,
+          "lng": 41.9827752
+        },
+        {
+          "osmId": "node/12280747501",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "улица Менделеева, д. 70",
+          "lat": 44.6537811,
+          "lng": 41.9227259
+        },
+        {
+          "osmId": "node/1474021128",
+          "name": "Магнит Семейный",
+          "format": "supermarket",
+          "address": "адрес не указан в OSM",
+          "lat": 44.6404065,
+          "lng": 41.9620221
+        },
+        {
+          "osmId": "node/1688852802",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "адрес не указан в OSM",
+          "lat": 44.6338089,
+          "lng": 41.9514496
+        },
+        {
+          "osmId": "node/1937262161",
+          "name": "«Магнит»",
+          "format": "unknown",
+          "address": "улица Маяковского, д. 5А",
+          "lat": 44.6148502,
+          "lng": 41.9147957
+        },
+        {
+          "osmId": "node/3083091859",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "адрес не указан в OSM",
+          "lat": 44.626429,
+          "lng": 41.9524317
+        },
+        {
+          "osmId": "node/4101410889",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "улица Калинина",
+          "lat": 44.6232078,
+          "lng": 41.9712991
+        },
+        {
+          "osmId": "node/4205358292",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "улица Гагарина, д. 51",
+          "lat": 44.6281761,
+          "lng": 41.946422
+        },
+        {
+          "osmId": "node/4205398089",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "улица Гагарина, д. 56",
+          "lat": 44.6281592,
+          "lng": 41.9449433
+        },
+        {
+          "osmId": "node/4569699023",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.6854035,
+          "lng": 41.8259121
+        },
+        {
+          "osmId": "node/5115577425",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.6011521,
+          "lng": 41.9625595
+        },
+        {
+          "osmId": "node/5203798143",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.6883629,
+          "lng": 41.8292154
+        },
+        {
+          "osmId": "node/5350306524",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.6218869,
+          "lng": 41.947391
+        },
+        {
+          "osmId": "node/6258112687",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.6369955,
+          "lng": 41.9366025
+        },
+        {
+          "osmId": "node/8600151819",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "адрес не указан в OSM",
+          "lat": 44.646202,
+          "lng": 41.9268251
+        },
+        {
+          "osmId": "node/9170595988",
+          "name": "Магнит Моя цена",
+          "format": "unknown",
+          "address": "улица Менделеева, д. 34/1, Невинномысск",
+          "lat": 44.6430612,
+          "lng": 41.9340151
+        },
+        {
+          "osmId": "node/9327801929",
+          "name": "Гипермаркет «Магнит»",
+          "format": "unknown",
+          "address": "адрес не указан в OSM",
+          "lat": 44.6401859,
+          "lng": 41.9610969
+        },
+        {
+          "osmId": "node/9327801930",
+          "name": "Гипермаркет «Магнит»",
+          "format": "unknown",
+          "address": "адрес не указан в OSM",
+          "lat": 44.6411025,
+          "lng": 41.9616561
+        },
+        {
+          "osmId": "node/9846446817",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "ул. Линейная улица, д. 15",
+          "lat": 44.6330005,
+          "lng": 41.9387628
+        },
+        {
+          "osmId": "way/1011218898",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.64757107142857,
+          "lng": 41.93055685714285
+        },
+        {
+          "osmId": "way/429253841",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "ул. Торговая улица, д. 3, Кочубеевское",
+          "lat": 44.68150978000001,
+          "lng": 41.82234532
+        },
+        {
+          "osmId": "way/731728699",
+          "name": "Магнит",
+          "format": "unknown",
+          "address": "улица Гагарина, д. 122, Кочубеевское",
+          "lat": 44.66568268,
+          "lng": 41.83868458
+        }
+      ]
+    },
+    {
+      "slug": "armavir",
+      "name": "Армавир",
+      "region": "krasnodarskiy-kray",
+      "lat": 44.9881845,
+      "lng": 41.06648035,
+      "stores": [
+        {
+          "osmId": "node/2279957788",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9861604,
+          "lng": 41.0608438
+        },
+        {
+          "osmId": "node/2985831405",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9902086,
+          "lng": 41.0691422
+        },
+        {
+          "osmId": "node/3084081184",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9911751,
+          "lng": 41.0638185
+        },
+        {
+          "osmId": "node/5934160985",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.9448407,
+          "lng": 41.1314813
+        },
+        {
+          "osmId": "way/219015477",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "ул. Азовская улица, д. 1/1, Армавир",
+          "lat": 44.99333095,
+          "lng": 41.06331135
+        },
+        {
+          "osmId": "way/413625604",
+          "name": "Магнит",
+          "format": "universal",
+          "address": "адрес не указан в OSM",
+          "lat": 44.98297228,
+          "lng": 41.09757104000001
+        }
+      ]
+    }
+  ]
+}

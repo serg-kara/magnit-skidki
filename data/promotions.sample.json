@@ -1,0 +1,360 @@
+{
+  "_comment": "Seed-набор акций по §7.1. Сроки задаются смещением от начала текущих суток (см. prisma/seed.ts), поэтому повторный seed в тот же день идемпотентен, а истёкшая акция не «оживает». Данные синтетические, с сайта сети не снимались.",
+  "promos": [
+    {
+      "name": "Молоко ультрапастеризованное «Индеевское» 3,2% 900 г",
+      "brand": "Индеевское",
+      "category": "dairy",
+      "priceOld": 84,
+      "priceNew": 69.99,
+      "bonus": "со скидочной картой Магнит"
+    },
+    {
+      "name": "Кефир «Индеевское» 2,5% 930 мл",
+      "brand": "Индеевское",
+      "category": "dairy",
+      "priceOld": 79.5,
+      "priceNew": 59.9
+    },
+    {
+      "name": "Творог «Домик в деревне» 9% 200 г",
+      "brand": "Домик в деревне",
+      "category": "dairy",
+      "priceOld": 96,
+      "priceNew": 74.99,
+      "discountPct": 22
+    },
+    {
+      "name": "Сметана «Большая кружка» 20% 300 г",
+      "brand": "Большая кружка",
+      "category": "dairy",
+      "priceOld": 89,
+      "priceNew": 69.99
+    },
+    {
+      "name": "Масло сливочное «Крестьянское» 82,5% 180 г",
+      "brand": "Простоквашино",
+      "category": "dairy",
+      "priceOld": 169,
+      "priceNew": 129,
+      "bonus": "2 по цене 1"
+    },
+    {
+      "name": "Йогурт «Тёма» клубника 290 г",
+      "brand": "Тёма",
+      "category": "dairy",
+      "priceOld": 64,
+      "priceNew": 44.99
+    },
+    {
+      "name": "Сыр «Российский» 50% 200 г",
+      "brand": "Ламбир",
+      "category": "dairy",
+      "priceOld": 189,
+      "priceNew": 139,
+      "scope": "store",
+      "cities": ["stavropol", "kurganinsk"],
+      "storeCount": 2
+    },
+    {
+      "name": "Хлеб «Бородинский» нарезка 400 г",
+      "brand": "Хлебный дом",
+      "category": "bakery",
+      "priceOld": 52,
+      "priceNew": 39.9
+    },
+    {
+      "name": "Батон «Нарезной» в/с 350 г",
+      "brand": "Karavai",
+      "category": "bakery",
+      "priceOld": 46,
+      "priceNew": 33.5
+    },
+    {
+      "name": "Круассан с масляной начинкой 80 г",
+      "category": "bakery",
+      "priceOld": 42,
+      "priceNew": 29.99,
+      "bonus": "-25% со скидочной картой Магнит"
+    },
+    {
+      "name": "Курица тушка «Петелинка» охлаждённая 1,2 кг",
+      "brand": "Петелинка",
+      "category": "meat",
+      "priceOld": 349,
+      "priceNew": 269
+    },
+    {
+      "name": "Филе куриное охлаждённое 800 г",
+      "brand": "Русская мясная компания",
+      "category": "meat",
+      "priceOld": 399,
+      "priceNew": 319,
+      "discountPct": 20
+    },
+    {
+      "name": "Сосиски «Докская» ГОСТ 450 г",
+      "brand": "Мясной двор",
+      "category": "meat",
+      "priceOld": 149,
+      "priceNew": 109,
+      "scope": "store",
+      "cities": ["krasnodar"],
+      "storeCount": 3
+    },
+    {
+      "name": "Свинина шейная охлаждённая 1 кг",
+      "category": "meat",
+      "priceOld": 519,
+      "priceNew": 429
+    },
+    {
+      "name": "Скумбрия холодного копчения 500 г",
+      "category": "fish",
+      "priceOld": 329,
+      "priceNew": 249
+    },
+    {
+      "name": "Сельдь «Филе в масле» 340 г",
+      "brand": "Кай",
+      "category": "fish",
+      "priceOld": 99,
+      "priceNew": 74.99
+    },
+    {
+      "name": "Сайра консервы 245 г",
+      "brand": "Рыбная слобода",
+      "category": "fish",
+      "priceOld": 68,
+      "priceNew": 49.9
+    },
+    {
+      "name": "Яблоки голден на развес 1 кг",
+      "category": "fruits",
+      "priceOld": 159,
+      "priceNew": 119
+    },
+    {
+      "name": "Бананы желтые на развес 1 кг",
+      "category": "fruits",
+      "priceOld": 129,
+      "priceNew": 89.9,
+      "discountPct": 30
+    },
+    {
+      "name": "Огурцы гладкие 250 г",
+      "category": "fruits",
+      "priceOld": 149,
+      "priceNew": 109,
+      "scope": "store",
+      "cities": ["armavir"],
+      "storeCount": 2
+    },
+    {
+      "name": "Картофель мытый 2 кг",
+      "category": "fruits",
+      "priceOld": 129,
+      "priceNew": 89
+    },
+    {
+      "name": "Макароны «Makfa» группа А 400 г",
+      "brand": "Makfa",
+      "category": "groceries",
+      "priceOld": 62,
+      "priceNew": 44.99
+    },
+    {
+      "name": "Крупа гречневая ядрица «Увелка» 850 г",
+      "brand": "Увелка",
+      "category": "groceries",
+      "priceOld": 109.5,
+      "priceNew": 74.99,
+      "bonus": "2 по цене 1 со скидочной картой Магнит"
+    },
+    {
+      "name": "Рис «Краснодарский» круглозёрный 900 г",
+      "brand": "Мистраль",
+      "category": "groceries",
+      "priceOld": 139,
+      "priceNew": 99
+    },
+    {
+      "name": "Масло подсолнечное рафинированное «Золотая семечка» 1 л",
+      "brand": "Золотая семечка",
+      "category": "groceries",
+      "priceOld": 159,
+      "priceNew": 119,
+      "discountPct": 25
+    },
+    {
+      "name": "Мука пшеничная в/с «Макфа» 2 кг",
+      "brand": "Макфа",
+      "category": "groceries",
+      "priceOld": 109,
+      "priceNew": 79.9
+    },
+    {
+      "name": "Сахар-песок «Пряность» 900 г",
+      "brand": "Пряность",
+      "category": "groceries",
+      "priceOld": 79,
+      "priceNew": 59
+    },
+    {
+      "name": "Чай зелёный «Greenfield» листовой 150 г",
+      "brand": "Greenfield",
+      "category": "beverages",
+      "priceOld": 249,
+      "priceNew": 179
+    },
+    {
+      "name": "Сок «Добрый» яблочный восстановленный 950 мл",
+      "brand": "Добрый",
+      "category": "beverages",
+      "priceOld": 129,
+      "priceNew": 89.9,
+      "scope": "store",
+      "cities": ["nevinnomyssk"],
+      "storeCount": 2
+    },
+    {
+      "name": "Вода «Ессентуки №4» газированная 1 л",
+      "brand": "Ессентуки",
+      "category": "beverages",
+      "priceOld": 89,
+      "priceNew": 59.9
+    },
+    {
+      "name": "Кола «Cooliba» 1,5 л",
+      "brand": "Cooliba",
+      "category": "beverages",
+      "priceOld": 99,
+      "priceNew": 64.99
+    },
+    {
+      "name": "Шоколад «Алёнка» молочный 90 г",
+      "brand": "Алёнка",
+      "category": "snacks",
+      "priceOld": 109,
+      "priceNew": 79
+    },
+    {
+      "name": "Чипсы «Lays» сметана и лук 150 г",
+      "brand": "Lays",
+      "category": "snacks",
+      "priceOld": 179,
+      "priceNew": 129,
+      "bonus": "3 по цене 2"
+    },
+    {
+      "name": "Печенье «Юбилейное» молочное 155 г",
+      "brand": "Юбилейное",
+      "category": "snacks",
+      "priceOld": 89,
+      "priceNew": 59.9
+    },
+    {
+      "name": "Орехи кешью жареные 200 г",
+      "category": "snacks",
+      "priceOld": 399,
+      "priceNew": 299
+    },
+    {
+      "name": "Средство для мытья посуды «Fairy» 500 мл",
+      "brand": "Fairy",
+      "category": "household",
+      "priceOld": 219,
+      "priceNew": 159
+    },
+    {
+      "name": "Салфетки влажные «Люба» 72 шт",
+      "brand": "Люба",
+      "category": "household",
+      "priceOld": 149,
+      "priceNew": 99,
+      "scope": "store",
+      "cities": ["krasnodar", "armavir"],
+      "storeCount": 1
+    },
+    {
+      "name": "Порошок стиральный «Миф» 400 г",
+      "brand": "Миф",
+      "category": "household",
+      "priceOld": 189,
+      "priceNew": 139
+    },
+    {
+      "name": "Вино игристое «Абрау-Дюрсо» брют красное 0,75 л",
+      "brand": "Абрау-Дюрсо",
+      "category": "alcohol",
+      "priceOld": 899,
+      "priceNew": 649,
+      "discountPct": 28,
+      "bonus": "-28% по карте Магнит"
+    },
+    {
+      "name": "Вино красное полусухое «Кубань-Вино» Тамани 0,75 л",
+      "brand": "Кубань-Вино",
+      "category": "alcohol",
+      "priceOld": 649,
+      "priceNew": 499
+    },
+    {
+      "name": "Шампанское «Российское» полусладкое 0,9 л",
+      "brand": "Российское",
+      "category": "alcohol",
+      "priceOld": 599,
+      "priceNew": 450,
+      "bonus": "2 по цене 1"
+    },
+    {
+      "name": "Пиво светлое «Velkopopovicky Kozel» 0,5 л",
+      "brand": "Velkopopovicky Kozel",
+      "category": "alcohol",
+      "priceOld": 145,
+      "priceNew": 109.99
+    },
+    {
+      "name": "Пиво «Крушовице» светлое нефильтрованное 0,5 л",
+      "brand": "Krusovice",
+      "category": "alcohol",
+      "priceOld": 129,
+      "priceNew": 94.99,
+      "scope": "store",
+      "cities": ["stavropol", "nevinnomyssk"],
+      "storeCount": 2
+    },
+    {
+      "name": "Водка «Хаски» премиальная 0,7 л",
+      "brand": "Хаски",
+      "category": "alcohol",
+      "priceOld": 749,
+      "priceNew": 599
+    },
+    {
+      "name": "Коньяк «Кизляр» 3 звёздочки 0,5 л",
+      "brand": "Кизляр",
+      "category": "alcohol",
+      "priceOld": 1199,
+      "priceNew": 949,
+      "discountPct": 21
+    },
+    {
+      "name": "Виски бурбон «Jim Beam White» 0,5 л",
+      "brand": "Jim Beam",
+      "category": "alcohol",
+      "priceOld": 1799,
+      "priceNew": 1449
+    },
+    {
+      "name": "Настойка «Охотничья» перечная 0,5 л",
+      "brand": "Охотничья",
+      "category": "alcohol",
+      "priceOld": 249,
+      "priceNew": 189,
+      "expired": true,
+      "fromOffsetDays": -25,
+      "toOffsetDays": -12
+    }
+  ]
+}
